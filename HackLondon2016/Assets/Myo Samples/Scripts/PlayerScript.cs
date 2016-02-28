@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
@@ -6,7 +7,8 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject playerModel;
 	public GameObject boxtip;
 	public int wingPower;
-	public float outputForce, playerSpeed;
+	public float outputForce, playerSpeed, maxSpeed;
+	public Text currentScore;
 
 	private Vector3 playerPosition;
 	private float lastPoint, currentPoint;
@@ -23,6 +25,8 @@ public class PlayerScript : MonoBehaviour {
 		currentPoint = boxtip.transform.position.y - playerPosition.y ;
 
 		outputForce = 0;
+
+		SetCountText ();
 	
 	}
 	
@@ -45,7 +49,20 @@ public class PlayerScript : MonoBehaviour {
 		lastPoint = currentPoint;
 
 		// Move the player to the right by the speed factor
-		rb.AddForce(Vector3.right * playerSpeed);
+		if (rb.velocity.magnitude > maxSpeed) {
+			rb.velocity = rb.velocity.normalized * maxSpeed;
+		} else {
+			rb.AddForce (Vector3.right * playerSpeed);
+		}
+
+		SetCountText ();
+
+		maxSpeed += playerPosition.x / 10;
 	
+	}
+
+	void SetCountText () {
+		float playerX = playerModel.transform.position.x;
+		currentScore.text = ((int)(100 * playerX)).ToString ();
 	}
 }

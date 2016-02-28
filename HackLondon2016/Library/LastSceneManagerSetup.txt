@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/OVR/Scenes/Room.unity
+- path: Assets/Myo Samples/Box On A Stick.unity
   isLoaded: 1
   isActive: 1
